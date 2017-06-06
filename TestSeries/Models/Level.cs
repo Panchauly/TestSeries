@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestSeries.Models
 {
-    public class Subject
+    public class Level
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SubjectId { get; set; }
-        public string SubjectName { get; set; }
+        public int LevelId { get; set; }
+        public string LevelName { get; set; }
     }
 }
