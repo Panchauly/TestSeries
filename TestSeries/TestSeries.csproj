@@ -184,6 +184,7 @@
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pattern.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Subject.cs" />
