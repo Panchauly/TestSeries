@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<IdentityRole>
+@{
+    ViewBag.Title = "Roles";
+    int indx = 0;
+}
+
+<h2>Roles</h2>
+<table class="table table-striped">
+    
+   
+    <tr>
+        <th>S. No.</th>
+        <th>@Html.DisplayNameFor(m=>m.Name)</th>        
+    </tr>
+        @foreach (var role in Model)
+        {
+            <tr>
+               <td>
+                   @(++indx)
+               </td>
+                <td>
+                    @Html.DisplayFor(r=>role.Name)
+                </td>
+            </tr>
+        }
+   
+</table>

@@ -40,8 +40,10 @@ namespace TestSeries.Models
         public DbSet<Level> Level { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Chapter> Chapter { get; set; }
-
-
+        public DbSet<Pattern> Patterns { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<Exam> Exam { get; set; }
+        public DbSet<Result> Result { get; set; }
 
     }
 }
