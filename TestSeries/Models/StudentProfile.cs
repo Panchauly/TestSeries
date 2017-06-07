@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestSeries.Models
 {
-    public class Student
+    public class StudentProfile
     {
         [Key]
         public string StudentId { get; set; }
@@ -22,7 +22,7 @@ namespace TestSeries.Models
         public bool IsActive { get; set; }
 
         [ForeignKey("StudentId")]
-        public virtual ApplicationUser AppliCtionUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("CityId")]
         public virtual City City { get; set; }

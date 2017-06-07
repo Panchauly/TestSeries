@@ -29,5 +29,19 @@ namespace TestSeries.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Image> Image { get; set; }
+        public DbSet<InstituteProfile> InstituteProfile { get; set; }
+        public DbSet<StudentProfile> StudentProfile { get; set; }
+        public DbSet<State> State { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Batch> Batch { get; set; }
+        public DbSet<Branch> Branch { get; set; }
+        public DbSet<Level> Level { get; set; }
+        public DbSet<Subject> Subject { get; set; }
+        public DbSet<Chapter> Chapter { get; set; }
+
+
+
     }
 }

@@ -15,7 +15,7 @@ namespace TestSeries.Models
         public int WrongAnswers { get; set; }
 
         [ForeignKey("Student")]
-        public virtual Student Students { get; set; }
+        public virtual StudentProfile Students { get; set; }
 
         [ForeignKey("Exam")]
         public virtual Exam Exams { get; set; }
