@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TestSeries.Models;
+using TestSeries.Models.ViewModel;
 
 namespace TestSeries.Controllers
 {
@@ -16,7 +17,7 @@ namespace TestSeries.Controllers
         public InstituteController()
         {
             _context = new ApplicationDbContext();
-            userId = User.Identity.GetUserId();
+          //  userId = User.Identity.GetUserId();
         }
 
         // GET: Institute
@@ -43,7 +44,7 @@ namespace TestSeries.Controllers
         }
 
         public ActionResult AddBranch()
-        {
+        {            
             return View();
         }
 
@@ -74,6 +75,41 @@ namespace TestSeries.Controllers
         {
             return View(model);
         }
+
+
+        public ActionResult AddChapter()
+        {
+            ViewBag.SubjectId = new SelectList(_context.Subject, "SubjectId", "SubjectName");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddChapter(Chapter model)
+        {
+            ViewBag.SubjectId = new SelectList(_context.Subject, "SubjectId", "SubjectName");
+            return View(model);
+        }
+
+
+        public ActionResult AddQuestion()
+        {
+            ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
+            ViewBag.Level  = new SelectList(_context.Subject, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Level, "SubjectId", "SubjectName");
+            ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddQuestion(QuestionViewModel model)
+        {
+            ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
+            ViewBag.Level = new SelectList(_context.Subject, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Level, "SubjectId", "SubjectName");
+            ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
+            return View(model);
+        }
+
 
     }
 }

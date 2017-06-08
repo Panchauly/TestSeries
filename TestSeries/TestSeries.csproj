@@ -193,6 +193,7 @@
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\StudentProfile.cs" />
     <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\ViewModel\QuestionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -258,6 +259,9 @@
     <Content Include="Views\Institute\Profile.cshtml" />
     <Content Include="Views\Institute\AddBranch.cshtml" />
     <Content Include="Views\Institute\AddLevel.cshtml" />
+    <Content Include="Views\Institute\AddSubject.cshtml" />
+    <Content Include="Views\Institute\AddChapter.cshtml" />
+    <Content Include="Views\Institute\AddQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
