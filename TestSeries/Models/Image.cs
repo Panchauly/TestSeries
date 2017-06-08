@@ -12,8 +12,7 @@ namespace TestSeries.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ImageId { get; set; }
-
-        public string InameName { get; set; }
+        public string ImageName { get; set; }
         public string ImagePath { get; set; }
         public string ImageType { get; set; }
         public string UploadedBy { get; set; }

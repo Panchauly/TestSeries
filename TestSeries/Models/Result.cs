@@ -8,17 +8,17 @@ namespace TestSeries.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResultId { get; set; }
-        public int Exam { get; set; }
-        public string Student { get; set; }
+        public int ExamId { get; set; }
+        public string StudentId { get; set; }
         public string Answers { get; set; }
         public int RightAnswers { get; set; }
         public int WrongAnswers { get; set; }
 
-        [ForeignKey("Student")]
-        public virtual StudentProfile Students { get; set; }
+        [ForeignKey("StudentId")]
+        public virtual StudentProfile Student { get; set; }
 
-        [ForeignKey("Exam")]
-        public virtual Exam Exams { get; set; }
+        [ForeignKey("ExamId")]
+        public virtual Exam Exam { get; set; }
 
     }
 }

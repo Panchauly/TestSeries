@@ -18,9 +18,9 @@ namespace TestSeries.Models
         public bool AnyImage { get; set; }
         public int DificultyLevel { get; set; }
         public int QuestionImage { get; set; }
-        public int UploadedBy { get; set; }
+        public string UploadedBy { get; set; }
         public DateTime UploadedOn { get; set; }
-        public int Pattern { get; set; }
+        public int PatternId { get; set; }
 
         [ForeignKey("QuestionImage")]
         public virtual Image Image { get; set; }
@@ -28,7 +28,7 @@ namespace TestSeries.Models
         [ForeignKey("UploadedBy")]
         public virtual InstituteProfile Institute { get; set; }
 
-        [ForeignKey("Pattern")]
-        public virtual Pattern Patterns { get; set; }
+        [ForeignKey("PatternId")]
+        public virtual Pattern Pattern { get; set; }
     }
 }

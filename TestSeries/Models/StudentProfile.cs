@@ -21,9 +21,6 @@ namespace TestSeries.Models
         public string InstituteWebsite { get; set; }
         public bool IsActive { get; set; }
 
-        [ForeignKey("StudentId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
-
         [ForeignKey("CityId")]
         public virtual City City { get; set; }
 

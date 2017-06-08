@@ -12,12 +12,12 @@ namespace TestSeries.Models
         public int Time { get; set; }
         public int Questions { get; set; }
         public DateTime ExamDate { get; set; }
-        public int Institute { get; set; }
+        public string InstituteId { get; set; }
         public int Marks { get; set; }
         public int NegativeMarks { get; set; }
         public int Pattern { get; set; }
 
-        [ForeignKey("Institute")]
+        [ForeignKey("InstituteId")]
         public virtual InstituteProfile Instituteprofile { get; set; }
 
         [ForeignKey("Pattern")]
