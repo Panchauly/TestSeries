@@ -18,7 +18,6 @@ namespace TestSeries.Models
         public int CityId { get; set; }
         public int ProfileImage { get; set; }
         public string RequestStatus { get; set; }
-        public string InstituteWebsite { get; set; }
         public bool IsActive { get; set; }
 
         [ForeignKey("CityId")]

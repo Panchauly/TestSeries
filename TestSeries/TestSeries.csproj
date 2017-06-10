@@ -264,8 +264,8 @@
     <Content Include="Views\Institute\AddChapter.cshtml" />
     <Content Include="Views\Institute\AddQuestion.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\Profile.cshtml" />
     <Content Include="Views\Student\Exam.cshtml" />
+    <Content Include="Views\Student\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
