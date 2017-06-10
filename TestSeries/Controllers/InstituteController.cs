@@ -136,8 +136,21 @@ namespace TestSeries.Controllers
             que.C = model.C;
             que.D = model.D;
             que.UploadedOn = DateTime.Now;
-            var pattern = _context.Patterns.FirstOrDefault(p => p.Level == model.Level && p.Subject == model.Subject && p.Branch == model.Branch && p.Chapter == model.Chapter);
-
+            Pattern pattern = _context.Patterns.FirstOrDefault(p => p.Level == model.Level && p.Subject == model.Subject && p.Branch == model.Branch && p.Chapter == model.Chapter);
+            if (pattern == null)
+            {
+                pattern = new Pattern();
+                pattern.Branch = model.Branch;
+                pattern.Chapter = model.Chapter;
+                pattern.Level = model.Level;
+                pattern.Subject = model.Subject;
+                _context.Patterns.Add(pattern);
+                _context.SaveChanges();
+            }
+            que.PatternId = pattern.PatternId;
+            que.AnyImage = false;
+            que.DificultyLevel = 0;
+            que.QuestionImage = 0;
             _context.Question.Add(que);
             if (_context.SaveChanges() > 0)
             {
