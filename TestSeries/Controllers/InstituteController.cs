@@ -51,6 +51,11 @@ namespace TestSeries.Controllers
         [HttpPost]
         public ActionResult AddBranch(Branch model)
         {
+            _context.Branch.Add(model);
+            if(_context.SaveChanges()>0)
+            {
+                return RedirectToAction("Index","Institute");
+            }
             return View(model);
         }
 
@@ -62,6 +67,11 @@ namespace TestSeries.Controllers
         [HttpPost]
         public ActionResult AddLevel(Level model)
         {
+            _context.Level.Add(model);
+            if (_context.SaveChanges() > 0)
+            {
+                return RedirectToAction("Index", "Institute");
+            }
             return View(model);
         }
 
@@ -73,6 +83,11 @@ namespace TestSeries.Controllers
         [HttpPost]
         public ActionResult AddSubject(Subject model)
         {
+            _context.Subject.Add(model);
+            if (_context.SaveChanges() > 0)
+            {
+                return RedirectToAction("Index", "Institute");
+            }
             return View(model);
         }
 
@@ -86,6 +101,11 @@ namespace TestSeries.Controllers
         [HttpPost]
         public ActionResult AddChapter(Chapter model)
         {
+            _context.Chapter.Add(model);
+            if (_context.SaveChanges() > 0)
+            {
+                return RedirectToAction("Index", "Institute");
+            }
             ViewBag.SubjectId = new SelectList(_context.Subject, "SubjectId", "SubjectName");
             return View(model);
         }
@@ -94,8 +114,8 @@ namespace TestSeries.Controllers
         public ActionResult AddQuestion()
         {
             ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
-            ViewBag.Level  = new SelectList(_context.Subject, "LevelId", "LevelName");
-            ViewBag.Subject = new SelectList(_context.Level, "SubjectId", "SubjectName");
+            ViewBag.Level  = new SelectList(_context.Level, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Subject, "SubjectId", "SubjectName");
             ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
             return View();
         }
@@ -104,9 +124,25 @@ namespace TestSeries.Controllers
         public ActionResult AddQuestion(QuestionViewModel model)
         {
             ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
-            ViewBag.Level = new SelectList(_context.Subject, "LevelId", "LevelName");
-            ViewBag.Subject = new SelectList(_context.Level, "SubjectId", "SubjectName");
+            ViewBag.Level = new SelectList(_context.Level, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Subject, "SubjectId", "SubjectName");
             ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
+            var que = new Question();
+            que.QuestionBody = model.QuestionBody;
+            que.UploadedBy = userId;
+            que.RightAnswer = model.RightAnswer;
+            que.A = model.A;
+            que.B = model.B;
+            que.C = model.C;
+            que.D = model.D;
+            que.UploadedOn = DateTime.Now;
+            var pattern = _context.Patterns.FirstOrDefault(p => p.Level == model.Level && p.Subject == model.Subject && p.Branch == model.Branch && p.Chapter == model.Chapter);
+
+            _context.Question.Add(que);
+            if (_context.SaveChanges() > 0)
+            {
+                return RedirectToAction("Index", "Institute");
+            }
             return View(model);
         }
 
