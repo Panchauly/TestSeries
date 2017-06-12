@@ -10,8 +10,8 @@ namespace TestSeries.Models
         public string InstituteName { get; set; }
         public string AddressLineFirst { get; set; }
         public string AddressLineSecond { get; set; }
-        public int CityId { get; set; }
-        public int Logo { get; set; }
+        public int? CityId { get; set; }
+        public int? Logo { get; set; }
         public string RequestStatus { get; set; }
         public string InstituteWebsite { get; set; }
         public bool IsActive { get; set; }

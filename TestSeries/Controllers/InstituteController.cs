@@ -12,12 +12,12 @@ namespace TestSeries.Controllers
     public class InstituteController : Controller
     {
         static ApplicationDbContext _context;
-        static string userId;
+        static string userId="";
 
         public InstituteController()
         {
             _context = new ApplicationDbContext();
-          //  userId = User.Identity.GetUserId();
+            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
         }
 
         // GET: Institute
@@ -28,7 +28,7 @@ namespace TestSeries.Controllers
 
         public new ActionResult Profile()
         {
-            ViewBag.CityId = new SelectList(_context.City,"CityId","CityName");
+            ViewBag.CityId = new SelectList(_context.City, "CityId", "CityName");
             ViewBag.StateId = new SelectList(_context.State, "StateId", "StateName");
             return View();
         }
@@ -44,7 +44,7 @@ namespace TestSeries.Controllers
         }
 
         public ActionResult AddBranch()
-        {            
+        {
             return View();
         }
 
@@ -52,9 +52,9 @@ namespace TestSeries.Controllers
         public ActionResult AddBranch(Branch model)
         {
             _context.Branch.Add(model);
-            if(_context.SaveChanges()>0)
+            if (_context.SaveChanges() > 0)
             {
-                return RedirectToAction("Index","Institute");
+                return RedirectToAction("Index", "Institute");
             }
             return View(model);
         }
@@ -114,7 +114,7 @@ namespace TestSeries.Controllers
         public ActionResult AddQuestion()
         {
             ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
-            ViewBag.Level  = new SelectList(_context.Level, "LevelId", "LevelName");
+            ViewBag.Level = new SelectList(_context.Level, "LevelId", "LevelName");
             ViewBag.Subject = new SelectList(_context.Subject, "SubjectId", "SubjectName");
             ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
             return View();
@@ -151,6 +151,8 @@ namespace TestSeries.Controllers
             que.AnyImage = false;
             que.DificultyLevel = 0;
             que.QuestionImage = 0;
+            if (!que.AnyImage)
+                que.QuestionImage = 2;
             _context.Question.Add(que);
             if (_context.SaveChanges() > 0)
             {

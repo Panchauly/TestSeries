@@ -23,7 +23,7 @@ namespace TestSeries.Models.ViewModel
         public char RightAnswer { get; set; }
         public bool AnyImage { get; set; }
         public int DificultyLevel { get; set; }
-        public int QuestionImage { get; set; }
+        public int? QuestionImage { get; set; }
         public string UploadedBy { get; set; }
         public DateTime UploadedOn { get; set; }
 

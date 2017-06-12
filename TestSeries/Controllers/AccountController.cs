@@ -148,6 +148,8 @@ namespace TestSeries.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                ApplicationDbContext _context = new ApplicationDbContext();
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,PhoneNumber = model.Phone};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -156,6 +158,26 @@ namespace TestSeries.Controllers
                     if(role!=null)
                     {
                         UserManager.AddToRole(user.Id, role);
+                        switch(role)
+                        {
+                            case "Institute":
+                                var institute = new InstituteProfile();
+                                institute.InstituteId = user.Id;
+                                institute.IsActive = true;
+                                _context.InstituteProfile.Add(institute);
+                                if(_context.SaveChanges()>0)
+                                {
+                                    var batch = new Batch();
+                                    batch.Institute = user.Id;
+                                    batch.AllotedSeats = 100;
+                                    batch.EnrolledSeates = 0;
+                                    _context.Batch.Add(batch);
+                                    _context.SaveChanges();
+                                }
+                                break;
+                            case "Student":
+                                break;
+                        }
                     }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

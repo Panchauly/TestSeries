@@ -15,8 +15,8 @@ namespace TestSeries.Models
         public int Batch { get; set; }
         public string AddressLineFirst { get; set; }
         public string AddressLineSecond { get; set; }
-        public int CityId { get; set; }
-        public int ProfileImage { get; set; }
+        public int? CityId { get; set; }
+        public int? ProfileImage { get; set; }
         public string RequestStatus { get; set; }
         public bool IsActive { get; set; }
 
