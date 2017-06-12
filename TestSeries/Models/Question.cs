@@ -14,7 +14,7 @@ namespace TestSeries.Models
         public string B { get; set; }
         public string C { get; set; }
         public string D { get; set; }
-        public char RightAnswer { get; set; }
+        public string RightAnswer { get; set; }
         public bool AnyImage { get; set; }
         public int DificultyLevel { get; set; }
         public int? QuestionImage { get; set; }

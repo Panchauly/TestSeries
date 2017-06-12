@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +11,12 @@ namespace TestSeries.Controllers
     public class StudentController : Controller
     {
         private static ApplicationDbContext _context;
+        static string userId;
 
         public StudentController()
         {
             _context = new ApplicationDbContext();
+            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
         }
 
 
@@ -37,7 +40,17 @@ namespace TestSeries.Controllers
 
         public ActionResult Exam()
         {
+            var student = _context.StudentProfile.FirstOrDefault(s => s.StudentId == userId);
+            var batch = _context.Batch.FirstOrDefault(b => b.BatchId == student.Batch);
+            var institute = _context.InstituteProfile.FirstOrDefault(i => i.InstituteId == batch.Institute);
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Exam(Exam model)
+        {
+            return View(model);
         }
 
     }

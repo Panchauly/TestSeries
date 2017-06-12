@@ -150,9 +150,6 @@ namespace TestSeries.Controllers
             que.PatternId = pattern.PatternId;
             que.AnyImage = false;
             que.DificultyLevel = 0;
-            que.QuestionImage = 0;
-            if (!que.AnyImage)
-                que.QuestionImage = 2;
             _context.Question.Add(que);
             if (_context.SaveChanges() > 0)
             {
@@ -161,6 +158,35 @@ namespace TestSeries.Controllers
             return View(model);
         }
 
+        public ActionResult AddExam()
+        {
+            ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
+            ViewBag.Level = new SelectList(_context.Level, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Subject, "SubjectId", "SubjectName");
+            ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddExam(Exam model,FormCollection form)
+        {
+            ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
+            ViewBag.Level = new SelectList(_context.Level, "LevelId", "LevelName");
+            ViewBag.Subject = new SelectList(_context.Subject, "SubjectId", "SubjectName");
+            ViewBag.Chapter = new SelectList(_context.Chapter, "ChapterId", "ChapterName");
+            var Branch = Convert.ToInt32(form["Branch"] as string);
+            var Level = Convert.ToInt32(form["Level"] as string);
+            var Subject = Convert.ToInt32(form["Subject"] as string);
+            var Chapter = Convert.ToInt32(form["Chapter"] as string);
+            Pattern pattern = _context.Patterns.FirstOrDefault(p => p.Level == Level && p.Subject == Subject && p.Branch == Branch && p.Chapter == Chapter);
+            model.Pattern = pattern.PatternId;
+            _context.Exam.Add(model);
+            if(_context.SaveChanges()>0)
+            {
+                return RedirectToAction("Index", "Institute");
+            }           
+            return View(model);
+        }
 
     }
 }
