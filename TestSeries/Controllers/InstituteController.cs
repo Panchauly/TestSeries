@@ -247,11 +247,13 @@ namespace TestSeries.Controllers
                         if (batch.EnrolledSeates < batch.AllotedSeats)
                         {
                             StudentProfile student = new StudentProfile();
+                            student.StudentId = user.Id;
                             student.FirstName = model.FirstName;
                             student.LastName = model.LastName;
                             student.DOB = model.DOB;
                             student.Gender = form["Gender"] as string;
                             student.Batch = batch.BatchId;
+                            student.IsActive = true;
                             _context.StudentProfile.Add(student);
                             if (_context.SaveChanges() > 0)
                             {
