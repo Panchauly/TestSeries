@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TestSeries.Models;
@@ -12,7 +14,41 @@ namespace TestSeries.Controllers
     public class InstituteController : Controller
     {
         static ApplicationDbContext _context;
-        static string userId="";
+        static string userId = "";
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public InstituteController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            _context = new ApplicationDbContext();
+            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         public InstituteController()
         {
@@ -168,7 +204,7 @@ namespace TestSeries.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddExam(Exam model,FormCollection form)
+        public ActionResult AddExam(Exam model, FormCollection form)
         {
             ViewBag.Branch = new SelectList(_context.Branch, "BranchId", "BranchName");
             ViewBag.Level = new SelectList(_context.Level, "LevelId", "LevelName");
@@ -181,12 +217,55 @@ namespace TestSeries.Controllers
             Pattern pattern = _context.Patterns.FirstOrDefault(p => p.Level == Level && p.Subject == Subject && p.Branch == Branch && p.Chapter == Chapter);
             model.Pattern = pattern.PatternId;
             _context.Exam.Add(model);
-            if(_context.SaveChanges()>0)
+            if (_context.SaveChanges() > 0)
             {
                 return RedirectToAction("Index", "Institute");
-            }           
+            }
             return View(model);
         }
+
+        public ActionResult AddStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddStudent(StudentViewModel model, FormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+
+                ApplicationDbContext _context = new ApplicationDbContext();
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.Phone };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "Student");
+                    var batch = _context.Batch.FirstOrDefault(b=>b.Institute == userId);
+                    if (batch != null)
+                    {
+                        if (batch.EnrolledSeates < batch.AllotedSeats)
+                        {
+                            StudentProfile student = new StudentProfile();
+                            student.FirstName = model.FirstName;
+                            student.LastName = model.LastName;
+                            student.DOB = model.DOB;
+                            student.Gender = form["Gender"] as string;
+                            student.Batch = batch.BatchId;
+                            _context.StudentProfile.Add(student);
+                            if (_context.SaveChanges() > 0)
+                            {
+                                batch.EnrolledSeates = batch.EnrolledSeates + 1;
+                                _context.SaveChanges();
+                                return RedirectToAction("Index", "Institute");
+                            }
+                        }
+                    }
+                }
+            }
+            return View(model);
+        }
+
 
     }
 }

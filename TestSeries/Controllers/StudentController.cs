@@ -42,16 +42,34 @@ namespace TestSeries.Controllers
         {
             var student = _context.StudentProfile.FirstOrDefault(s => s.StudentId == userId);
             var batch = _context.Batch.FirstOrDefault(b => b.BatchId == student.Batch);
-            var institute = _context.InstituteProfile.FirstOrDefault(i => i.InstituteId == batch.Institute);
-
-            return View();
+            var exam = _context.Exam.FirstOrDefault(e => e.InstituteId == batch.Institute);
+            var questions = _context.Question.Where(q=>q.PatternId==exam.Pattern && q.UploadedBy==exam.InstituteId).ToList();
+            ViewBag.Index = 0;
+            var question = questions[0];
+            return View(question);
         }
 
         [HttpPost]
-        public ActionResult Exam(Exam model)
+        public ActionResult Exam(Question model, string Command, FormCollection form)
         {
+
+            switch(Command)
+            {
+                case "Next":
+
+                    break;
+                case "Prev":
+                    break;
+                case "Submit":
+                    break;
+            }
+
             return View(model);
         }
+
+
+
+       
 
     }
 }

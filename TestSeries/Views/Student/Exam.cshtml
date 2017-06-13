@@ -1,7 +1,10 @@
-﻿
+﻿@model TestSeries.Models.Question
 @{
     ViewBag.Title = "Exam";
+    int indx = ViewBag.Index;
 }
 
-<h2>Exam</h2>
-
+@using (@Html.BeginForm("Exam", "Student", FormMethod.Post))
+{
+    Html.LabelFor(q => q.QuestionBody);
+}
